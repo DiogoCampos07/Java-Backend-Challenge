@@ -26,7 +26,7 @@ public class Movie {
     @Column(name = "title", nullable = false)
     @Size(min = 2, max = 250, message = "Title must be between {min} and {max} characters long")
     private String title;
-    @Column(name = "launchDate", nullable = false)
+    @Column(name = "launch_date", nullable = false)
     private LocalDate launchDate;
     @Column(name = "rank", nullable = false)
     @Min(value = 0, message = "Rank must be greater than or equal to {value}")
