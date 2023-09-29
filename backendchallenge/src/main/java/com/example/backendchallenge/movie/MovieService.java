@@ -55,9 +55,6 @@ public class MovieService {
         movie.setLaunchDate(movieDTO.launchDate());
         movie.setRank(movieDTO.rank());
         movie.setRevenue(movieDTO.revenue());
-        if (movie.getRank() == null || movie.getRevenue() == null) {
-            throw new ValidationException("Rank and/or revenue cannot be null.");
-        }
         validateAndSaveMovie(movie);
         repository.save(movie);
         return movie;
