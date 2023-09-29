@@ -37,8 +37,8 @@ public class Movie {
 
 
     public Movie(MovieDTO data) {
-        this.launchDate = data.launchDate();
         this.title = data.title();
+        this.launchDate = data.launchDate();
         this.rank = data.rank();
         this.revenue = data.revenue();
     }

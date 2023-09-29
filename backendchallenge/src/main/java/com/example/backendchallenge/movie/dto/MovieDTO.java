@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record MovieDTO(
-        LocalDate launchDate,
         String title,
+        LocalDate launchDate,
         Integer rank,
         BigDecimal revenue) {
 }

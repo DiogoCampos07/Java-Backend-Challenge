@@ -3,6 +3,7 @@ package com.example.backendchallenge.movie;
 import com.example.backendchallenge.exceptions.MovieNotFoundException;
 import com.example.backendchallenge.movie.dto.MovieDTO;
 import jakarta.validation.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class MovieService {
         this.repository = repository;
     }
 
-    private void validateAndSaveMovie(Movie movie) {
+    protected Boolean validateMovie(@NotNull Movie movie) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Movie>> violations = validator.validate(movie);
@@ -32,12 +33,13 @@ public class MovieService {
             throw new ValidationException(errorMessage.toString());
         }
 
-        repository.save(movie);
+        return true;
     }
 
     public Movie createMovie(MovieDTO movieDTO) {
         Movie newMovie = new Movie(movieDTO);
-        validateAndSaveMovie(newMovie);
+        if (validateMovie(newMovie))
+            repository.save(newMovie);
         return newMovie;
     }
 
@@ -55,8 +57,8 @@ public class MovieService {
         movie.setLaunchDate(movieDTO.launchDate());
         movie.setRank(movieDTO.rank());
         movie.setRevenue(movieDTO.revenue());
-        validateAndSaveMovie(movie);
-        repository.save(movie);
+        if (validateMovie(movie))
+            repository.save(movie);
         return movie;
     }
 
