@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, UUID> {
 
+    // Custom query method to retrieve movies with launch dates within a specified range.
     @Query("select m from movies m where m.launchDate between ?1 and ?2")
     List<Movie> getFilteredMovies(LocalDate startDate, LocalDate endDate);
 }

@@ -48,6 +48,7 @@ class MovieControllerTest {
         objectMapper.findAndRegisterModules();
     }
 
+    // Test for creating a movie via POST request
     @Test
     public void testCreateMovie() throws Exception {
         UUID movieId = UUID.randomUUID();
@@ -81,6 +82,7 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.revenue").value(50.00));
     }
 
+    // Test for getting a list of all movies
     @Test
     public void testGetAllMovies() {
         List<Movie> moviesList = new ArrayList<>();
@@ -100,6 +102,7 @@ class MovieControllerTest {
 
     }
 
+    // Test for getting a movie by its ID
     @Test
     public void testGetMovieById() {
         UUID movieId = UUID.randomUUID();
@@ -118,7 +121,7 @@ class MovieControllerTest {
         assertEquals(movie.getTitle(), returnedMovie.getTitle());
     }
 
-
+    // Test for updating a movie via PUT request
     @Test
     public void testUpdateMovie() {
         UUID movieId = UUID.randomUUID();
@@ -143,6 +146,7 @@ class MovieControllerTest {
         assert response.getBody().getRevenue().equals(new BigDecimal("50.00"));
     }
 
+    // Test for deleting a movie by its ID
     @Test
     public void testDeleteMovieById() {
         UUID movieId = UUID.randomUUID();
@@ -153,6 +157,8 @@ class MovieControllerTest {
 
         assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
+
+    // Test for getting filtered movies by date range
     @Test
     public void testGetFilteredMovies() {
         LocalDate startDate = LocalDate.of(2023, 1, 1);

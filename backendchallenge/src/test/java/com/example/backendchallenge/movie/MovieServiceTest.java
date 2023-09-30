@@ -30,6 +30,7 @@ class MovieServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    // Test for validating a valid Movie entity
     @Test
     public void testValidateMovie() {
         Movie movie = new Movie(UUID.randomUUID(),"Movie 1", LocalDate.of(2023, 1, 15),
@@ -38,12 +39,14 @@ class MovieServiceTest {
         Assertions.assertTrue(movieService.validateMovie(movie));
     }
 
+    // Test for validating an invalid Movie entity with validation constraints
     @Test
     public void testValidateMovieWithInvalidMovie() {
         Movie movie = new Movie(null, null, null, -6, null);
         Assertions.assertThrows(ValidationException.class, () -> movieService.validateMovie(movie));
     }
 
+    // Test for creating a Movie with valid data
     @Test
     void testCreateMovieWithValidMovie() {
         MovieDTO validMovieDTO = new MovieDTO("Movie 1", LocalDate.of(2023, 1, 15),
@@ -53,6 +56,7 @@ class MovieServiceTest {
         verify(repository, times(1)).save(createdMovie);
     }
 
+    // Test for creating a Movie with invalid data, expecting a ValidationException
     @Test
     public void testCreateMovieInvalidMovie() {
         MovieDTO invalidMovieDTO = new MovieDTO(null, null, -6, null);
@@ -62,6 +66,7 @@ class MovieServiceTest {
         verify(repository, never()).save(any(Movie.class));
     }
 
+    // Test for getting a Movie by a valid UUID
     @Test
     public void testGetMovieByIdValidId() {
         Movie mockMovie = new Movie();
@@ -74,6 +79,7 @@ class MovieServiceTest {
         assertEquals(mockMovie, result);
     }
 
+    // Test for getting a Movie by an invalid UUID, expecting a MovieNotFoundException
     @Test
     public void testGetMovieByIdInvalidId() {
         UUID invalidId = UUID.randomUUID();
@@ -83,6 +89,7 @@ class MovieServiceTest {
         assertThrows(MovieNotFoundException.class, () -> movieService.getMovieById(invalidId));
     }
 
+    // Test for getting all Movies
     @Test
     public void testGetAllMovies() {
         List<Movie> mockMovies = new ArrayList<>();
@@ -101,6 +108,7 @@ class MovieServiceTest {
         assertEquals(mockMovies.size(), result.size());
     }
 
+    // Test for updating a Movie with valid data
     @Test
     public void testUpdateMovieValidMovie() {
         UUID movieId = UUID.randomUUID();
@@ -115,6 +123,7 @@ class MovieServiceTest {
         verify(repository, times(1)).save(updatedMovie);
     }
 
+    // Test for updating a non-existent Movie, expecting a MovieNotFoundException
     @Test
     public void testUpdateMovieMovieNotFound() {
         UUID nonExistentMovieId = UUID.randomUUID();
@@ -128,6 +137,7 @@ class MovieServiceTest {
         verify(repository, never()).save(any(Movie.class));
     }
 
+    // Test for deleting an existing Movie by its UUID
     @Test
     public void testDeleteByIdExistingMovie() {
         UUID movieId = UUID.randomUUID();
@@ -139,6 +149,7 @@ class MovieServiceTest {
         verify(repository, times(1)).deleteById(movieId);
     }
 
+    // Test for deleting a non-existent Movie by its UUID, expecting a MovieNotFoundException
     @Test
     public void testDeleteByIdNonExistingMovie() {
         UUID movieId = UUID.randomUUID();
@@ -146,6 +157,7 @@ class MovieServiceTest {
 
         assertThrows(MovieNotFoundException.class, () -> movieService.deleteById(movieId));    }
 
+    // Test for getting filtered Movies by start and end dates
     @Test
     public void testGetFilteredMovies() {
         LocalDate startDate = LocalDate.of(2023, 1, 1);

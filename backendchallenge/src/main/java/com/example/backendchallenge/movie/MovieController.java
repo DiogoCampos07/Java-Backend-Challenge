@@ -19,10 +19,12 @@ public class MovieController {
 
     private final MovieService movieService;
 
+    // Constructor to inject MovieService
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
 
+    // Endpoint to add a new Movie
     @PostMapping
     @Operation(summary = "Add Movie", description = "Add a new Movie", tags = {"Movie"})
     public ResponseEntity<Movie> createMovie(@RequestBody @NotNull MovieDTO movieDTO) {
@@ -30,6 +32,7 @@ public class MovieController {
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 
+    // Endpoint to get all Movies
     @GetMapping
     @Operation(summary = "Get Movies", description = "Get all Movies", tags = {"Movie"})
     public ResponseEntity<List<Movie>> getAllMovies() {
@@ -40,6 +43,7 @@ public class MovieController {
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
+    // Endpoint to get a Movie by its ID
     @GetMapping("/{movieId}")
     @Operation(summary = "Get a Movie", description = "Get a Movie by Id", tags = {"Movie"})
     public ResponseEntity<Movie> getMovieById(@PathVariable("movieId") UUID id) {
@@ -47,6 +51,7 @@ public class MovieController {
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
+    // Endpoint to update a Movie by its ID
     @PutMapping("/{movieId}")
     @Operation(summary = "Update a Movie", description = "Update a Movie by Id", tags = {"Movie"})
     public ResponseEntity<Movie> updateMovie(@PathVariable("movieId") UUID id, @RequestBody MovieDTO movieDTO) {
@@ -54,6 +59,7 @@ public class MovieController {
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
+    // Endpoint to delete a Movie by its ID
     @DeleteMapping("/{movieId}")
     @Operation(summary = "Delete a Movie", description = "Delete a Movie by Id", tags = {"Movie"})
     public ResponseEntity<Void> deleteMovieById(@PathVariable("movieId") UUID id) {
@@ -61,6 +67,7 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
+    // Endpoint to get Movies filtered by launch date
     @GetMapping("/filters")
     @Operation(summary = "Get Movies", description = "Get Movies filtered by launch date", tags = {"Movie"})
     public ResponseEntity<List<Movie>> getFilteredMovies(

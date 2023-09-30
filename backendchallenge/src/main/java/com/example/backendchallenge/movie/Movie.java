@@ -36,6 +36,7 @@ public class Movie {
     private BigDecimal revenue;
 
 
+    // Constructor to create a Movie entity from a MovieDTO object
     public Movie(MovieDTO data) {
         this.title = data.title();
         this.launchDate = data.launchDate();
